@@ -1,6 +1,7 @@
 package com.yuneec.imagefilterlibrary;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 
@@ -194,13 +195,15 @@ public class PixelBuffer {
 
         // Convert upside down mirror-reversed image to right-side up normal
         // image.
-        for (int i = 0; i < mHeight; i++) {
-            for (int j = 0; j < mWidth; j++) {
-                ibt.put((mHeight - i - 1) * mWidth + j, ib.get(i * mWidth + j));
-            }
-        }
+//        for (int i = 0; i < mHeight; i++) {
+//            for (int j = 0; j < mWidth; j++) {
+//                ibt.put((mHeight - i - 1) * mWidth + j, ib.get(i * mWidth + j));
+//            }
+//        }
 
-        mBitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
-        mBitmap.copyPixelsFromBuffer(ibt);
+        Bitmap midBitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
+        midBitmap.copyPixelsFromBuffer(ibt);
+        Matrix m=new Matrix();
+        mBitmap=Bitmap.createBitmap(midBitmap,0,0,mWidth,mHeight,m,true);
     }
 }
